@@ -2,3 +2,5 @@ Flask
 gunicorn
 eventlet
 flask_socketio
+flask_sqlalchemy
+flask_login
