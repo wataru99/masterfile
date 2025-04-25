@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>登録完了</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #e6f2ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .box h1 {
+            color: #007acc;
+            margin-bottom: 20px;
+        }
+        .box p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .box .id {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .box a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007acc;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .box a:hover {
+            background-color: #005f99;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>登録ありがとうございます！</h1>
+        <p>企業からのご連絡をお待ちください。</p>
+        <div class="id">あなたのIDは <strong>{{ user_id }}</strong> です</div>
+        <a href="{{ url_for('user.user_dashboard', user_id=user_id) }}">ホームへ戻る</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.name }}のプロフィール</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+        .profile {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .profile img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .profile h2 {
+            margin-top: 15px;
+        }
+        .profile .info {
+            margin: 10px 0;
+        }
+        .badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: white;
+        }
+        .gold { background: gold; color: black; }
+        .silver { background: silver; color: black; }
+        .bronze { background: peru; }
+        .featured { background: crimson; }
+        .dm-button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile">
+        <img src="{{ url_for('static', filename='uploads/' + (user.photo_url or 'default.jpg')) }}" alt="画像">
+        <h2>{{ user.full_name }}</h2>
+        <div class="info"><strong>年齢：</strong>{{ user.age }}</div>
+        <div class="info"><strong>職種：</strong>{{ user.current_occupation }}</div>
+        <div class="info"><strong>居住地：</strong>{{ user.address }}</div>
+        <div class="info"><strong>自己紹介：</strong><br>{{ user.intro }}</div>
+        <div class="info">
+            {% if user.membership == 'gold' %}<span class="badge gold">ゴールド</span>{% endif %}
+            {% if user.membership == 'silver' %}<span class="badge silver">シルバー</span>{% endif %}
+            {% if user.membership == 'bronze' %}<span class="badge bronze">ブロンズ</span>{% endif %}
+            {% if user.featured %}<span class="badge featured">注目</span>{% endif %}
+        </div>
+
+        {% if company_code %}
+            {% if has_applied %}
+               <div class="dm-button" style="background: gray; cursor: default;">申請済み</div>
+            {% else %}
+              <a href="{{ url_for('company.dm_form', company_code=company_code, user_id=user.id) }}" class="dm-button">チャット申請</a>
+            {% endif %}
+            <br><br>
+            <a href="{{ url_for('company.candidates_detail', company_code=company_code, user_id=user.id) }}" class="card">← 一覧に戻る</a>
+        {% endif %}
+    
+
+        <br><br>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!-- templates/dm_sent.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>DM送信完了</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #e6f2ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .box h1 {
+      color: #2d98da;
+      margin-bottom: 20px;
+    }
+    .box a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #2d98da;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+    .box a:hover {
+      background-color: #1e73c3;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>DMを送信しました！</h1>
+    <p>求職者からの返答をお待ちください。</p>
+    <a href="{{ url_for('company.candidates', company_code=company_code) }}">← 求職者一覧に戻る</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>管理ダッシュボード</title></head>
+<body>
+    <h1>管理ダッシュボード</h1>
+    <ul>
+        <li><a href="{{ url_for('admin.users') }}">ユーザー一覧</a></li>
+        <li><a href="{{ url_for('admin.companies') }}">企業一覧</a></li>
+        <li><a href="{{ url_for('admin.dms') }}">DM一覧</a></li>
+        <li><a href="{{ url_for('admin.chats') }}">チャット一覧</a></li>
+        <li><a href="{{ url_for('admin.logout') }}">ログアウト</a></li>
+    </ul>
+</body>
+</html>

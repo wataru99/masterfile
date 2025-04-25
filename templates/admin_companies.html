@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>企業一覧</title></head>
+<body>
+    <h1>企業一覧</h1>
+    <ul>
+        {% for company in companies %}
+            <li>{{ company.username }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

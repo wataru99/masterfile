@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スカウト | PR Career Platform</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .section {
+      padding: 60px 20px;
+    }
+    .section h2, .section h3 {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .icon-box {
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .icon-box i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    .btn-light-outline {
+      border: 1px solid #fff;
+      color: #fff;
+    }
+    .form-container {
+      background: rgba(255,255,255,0.95);
+      color: #000;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <header class="bg-dark shadow-sm py-3 mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h4 text-white">PR Career Platform</h1>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link text-white" href="/dashboard">ホーム</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/ai-diagnosis">AI診断</a></li>
+          <li class="nav-item"><a class="nav-link text-white active" href="/scout">スカウト</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/achievements">実績</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/contact">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section text-center">
+      <h2>企業向けスカウト機能</h2>
+      <p>メディア経験者に直接スカウトできる機能で、貴社の広報・PR戦略に最適な人材を見つけましょう。</p>
+    </section>
+
+    <section class="section">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="fas fa-envelope-open-text"></i>
+            <h4>直接オファー可能</h4>
+            <p>企業から求職者へ直接メッセージを送ることができ、スピーディなマッチングを実現します。</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="fas fa-comments"></i>
+            <h4>高い返信率</h4>
+            <p>意欲的な登録者多数。スカウトに対する高い返信率が特徴です。</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box">
+            <i class="fas fa-search"></i>
+            <h4>条件絞り込み検索</h4>
+            <p>年齢・スキル・経験年数などで詳細に絞り込み可能です。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section text-center">
+      <h3>人材の検索・スカウトには企業アカウントが必要です</h3>
+      <a href="/register" class="btn btn-light btn-lg m-2">企業登録はこちら</a>
+      <a href="/contact" class="btn btn-light-outline btn-lg m-2">お問い合わせ</a>
+    </section>
+
+    <section class="section">
+      <div class="form-container">
+        <h3 class="text-center mb-4">スカウト申込フォーム</h3>
+        <form action="/submit-scout" method="POST">
+          <div class="mb-3">
+            <label for="company" class="form-label">会社名</label>
+            <input type="text" class="form-control" id="company" name="company" required>
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">担当者名</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">メールアドレス</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">スカウト内容</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">送信する</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h5>PR Career Platform</h5>
+          <p>メディア経験者と企業をつなぐセカンドキャリア支援。</p>
+        </div>
+        <div class="col-md-3">
+          <h6>メニュー</h6>
+          <ul class="list-unstyled">
+            <li><a class="text-white" href="/dashboard">ホーム</a></li>
+            <li><a class="text-white" href="/ai-diagnosis">AI診断</a></li>
+            <li><a class="text-white" href="/scout">スカウト</a></li>
+            <li><a class="text-white" href="/achievements">実績</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>情報</h6>
+          <ul class="list-unstyled">
+            <li><a class="text-white" href="/terms">利用規約</a></li>
+            <li><a class="text-white" href="/privacy">プライバシーポリシー</a></li>
+            <li><a class="text-white" href="/company">運営会社</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>連絡先</h6>
+          <p>info@prcareer.co.jp</p>
+          <a href="/contact" class="btn btn-outline-light btn-sm">お問い合わせフォーム</a>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <small>&copy; 2025 PR Career Platform. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

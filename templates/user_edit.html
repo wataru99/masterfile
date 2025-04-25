@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー情報の編集</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #e6f2ff;
+            padding: 40px;
+        }
+        h1 {
+            color: #007acc;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            background-color: #007acc;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #005f99;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007acc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        img {
+            display: block;
+            margin-top: 10px;
+            max-width: 100px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>ユーザー情報の編集</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    <label>名前：</label>
+    <input type="text" name="full_name" value="{{ user.full_name }}" required>
+
+    <label>住所：</label>
+    <input type="text" name="address" value="{{ user.address }}">
+
+    <label>電話番号：</label>
+    <input type="tel" name="phone_number" value="{{ user.phone_number }}">
+
+    <label>メール：</label>
+    <input type="email" name="email" value="{{ user.email }}" required>
+
+    <label>現在の職業：</label>
+    <input type="text" name="current_occupation" value="{{ user.current_occupation }}">
+
+    <label>希望条件：</label>
+    <input type="text" name="desired_conditions" value="{{ user.desired_conditions }}">
+
+    <label>現在のプロフィール画像：</label>
+    <img src="{{ url_for('static', filename='uploads/' + (user.photo_url or 'default.jpg')) }}" alt="画像">
+
+    <label>新しい画像をアップロード：</label>
+    <input type="file" name="photo_url">
+
+    <label>
+        <input type="checkbox" name="delete_image" value="1"> 現在の画像を削除する
+    </label>
+
+    <label>パスワード（6文字以上）:</label>
+    <input type="password" name="password" minlength="6" placeholder="パスワードを入力">
+
+    <label>パスワード（確認）:</label>
+    <input type="password" name="confirm_password" minlength="6" placeholder="もう一度入力">
+
+    <input type="submit" value="更新">
+</form>
+
+<a href="{{ url_for('user.user_dashboard', user_id=user.id) }}">← ホームに戻る</a>
+
+</body>
+</html>

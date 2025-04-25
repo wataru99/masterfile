@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>PR Career Platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-image: url("/static/okumono.png");
+            background-size: cover;         /* 画面全体にフィット */
+            background-repeat: no-repeat;   /* 繰り返さない */
+            background-position: center;    /* 中央に配置 */
+        }
+        h2, h3, h4 {
+            font-weight: bold;
+        }
+        .section-title {
+            margin-bottom: 1.5rem;
+        }
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .btn-custom {
+            margin: 0 0.5rem;
+        }
+        .slider-container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 50px auto;
+            overflow: hidden;
+            position: relative;
+            background-color: #fff;
+            height: 270px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .slider-track {
+            display: flex;
+            width: calc(285px * 14);
+            animation: scrollSlider 30s linear infinite;
+        }
+        .slide {
+            flex: 0 0 285px;
+            height: 270px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            background-color: #e9ecef;
+            color: #000;
+            border-radius: 8px;
+        }
+        @keyframes scrollSlider {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @media (max-width: 768px) {
+            .slider-container {
+                max-width: 90%;
+            }
+            .slide {
+                flex: 0 0 240px;
+                height: 240px;
+            }
+        }
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #0072ff;
+        }
+        .custom-card {
+            background-color: #fff;
+            color: #000;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            height: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        footer a {
+            color: #fff;
+        }
+        .nav-link.active {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        footer {
+            background-color: #001F3F;
+        }
+    
+@media (max-width: 768px) {
+    section.text-center {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    .slider-container {
+        height: 220px;
+    }
+    .slide {
+        flex: 0 0 180px;
+        height: 180px;
+        margin-right: 10px;
+    }
+    .custom-card {
+        padding: 1rem;
+    }
+    h2.section-title {
+        font-size: 1.8rem !important;
+    }
+    .section-text {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+    }
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .nav-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.9rem;
+    }
+}
+
+</style>
+</head>
+
+<body>
+    <header class="bg-dark shadow-sm py-3 mb-4" style="position: fixed; top: 0; width: 100%; z-index: 1030;">
+        <div class="container d-flex justify-content-between align-items-center">
+          <h1 class="h4 text-white">PR Career Platform</h1>
+          <nav>
+            <ul class="nav">
+              <li class="nav-item"><a class="nav-link text-white active" href="/dashboard">ホーム</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="/ai-diagnosis">AI診断</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="/scout">スカウト</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="/achievements">実績</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="/faq">FAQ</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="/contact">お問い合わせ</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="/profile"><i class="fas fa-user-circle me-1"></i>プロフィール</a></li>
+            </ul>
+          </nav>
+          <form method="POST" action="{{ url_for('admin.logout') }}">
+            <button class="btn btn-sm btn-outline-light">ログアウト</button>
+          </form>
+        </div>
+      </header>
+      
+<header class="bg-dark shadow-sm py-3 mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1 class="h4 text-white">PR Career Platform</h1>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a class="nav-link text-white active" href="/dashboard">ホーム</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/ai-diagnosis">AI診断</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/scout">スカウト</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/achievements">実績</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/faq">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/contact">お問い合わせ</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/profile"><i class="fas fa-user-circle me-1"></i>プロフィール</a></li>
+            </ul>
+        </nav>
+        <form method="POST" action="{{ url_for('admin.logout') }}">
+            <button class="btn btn-sm btn-outline-light">ログアウト</button>
+        </form>
+    </div>
+</header>
+
+<!-- バナー画像：全幅余白なし -->
+<!-- 画像バナーセクション -->
+<section style="margin: 0; padding: 0;">
+    <img src="/static/koho.png" alt="広報PRバナー" 
+         style="width: 100%; height: auto; display: block; margin: 0; padding: 0;">
+  </section>
+  
+  <!-- メインセクション -->
+  <main class="container">
+    <section class="text-center mb-5" style="padding-top: 2cm; padding-bottom: 2cm;">
+      <h2 class="section-title" style="font-size: 2.5rem; font-family: 'Playfair Display', serif;">
+        広報PR特化のセカンドキャリア転職プラットフォーム
+      </h2>
+      <p class="section-text">
+        元アナウンサー・タレント・元宝塚など、メディア経験者が次のステージで輝ける場を創出。<br>
+        社会的信頼性と対人スキルを活かして企業の広報活動に貢献するキャリアをご提案します。
+      </p>
+      <a href="/ai-diagnosis" class="btn btn-light btn-lg btn-custom">AI診断をしてみる</a>
+      <a href="/scout" class="btn btn-outline-light btn-lg btn-custom">スカウトはこちら</a>
+    </section>
+  </main>
+  
+
+    <section class="text-center mb-5">
+        <div class="container">
+          <div class="row align-items-start">
+      
+            <!-- 左：検索UI -->
+            <div class="col-md-6 text-start">
+              <h3 class="section-title">広報を探す</h3>
+      
+              <!-- 横並びボタン -->
+              <div class="d-flex flex-wrap justify-content-start gap-3 mb-4">
+                <button class="btn btn-outline-primary btn-lg">キャリアから探す</button>
+                <button class="btn btn-outline-primary btn-lg">得意分野から探す</button>
+                <button class="btn btn-outline-primary btn-lg">希望年収から探す</button>
+              </div>
+      
+              <!-- キーワード検索 -->
+              <div class="d-flex">
+                <input type="text" class="form-control me-2" placeholder="キーワードで探す" style="max-width: 300px;">
+                <button class="btn btn-primary">検索</button>
+              </div>
+            </div>
+      
+            <!-- 右：動画 -->
+            <div class="col-md-6">
+              <video autoplay loop muted playsinline
+                     style="border-radius: 12px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <source src="{{ url_for('static', filename='videos/concept.mov') }}" type="video/quicktime">
+                お使いのブラウザはこの動画形式に対応していません。
+              </video>
+            </div>
+      
+          </div>
+        </div>
+      </section>
+      
+<!-- ▲▲▲ 追加：都道府県から探すセクション ▲▲▲ -->
+
+<section class="mb-5">
+    <section class="mb-5">
+        <h3 class="section-title text-center">こんな求職者もいます！</h3>
+      
+        <!-- ▼ 1人目（画像左寄せ・近づける） -->
+        <div class="row align-items-center py-5">
+          <div class="col-md-4 text-end">
+            <img src="/static/user1.jpg" alt="求職者1" class="img-fluid rounded-circle shadow-lg" style="max-width: 260px;">
+          </div>
+          <div class="col-md-6">
+            <div class="card p-4 shadow-sm" style="width: 75%; margin-left: 0;">
+              <h4 class="fw-bold text-primary">元テレビ局アナウンサー / 山本 美咲（34）</h4>
+              <p class="section-text text-dark mb-0">
+                全国ネットで情報番組を10年以上担当。クリアな発声と信頼感のある語り口でファンも多数。
+                現在は広報PR業務を志望し、メディア対応・社外プレゼン・イベントMCなども可能。<br>
+                柔軟で人当たりも良く、社内外問わず好印象な存在に。
+              </p>
+            </div>
+          </div>
+        </div>
+      
+        <!-- ▼ 2人目（画像右寄せ・近づける） -->
+        <div class="row align-items-center flex-md-row-reverse py-5">
+          <div class="col-md-4 text-start">
+            <img src="/static/user2.jpg" alt="求職者2" class="img-fluid rounded-circle shadow-lg" style="max-width: 260px;">
+          </div>
+          <div class="col-md-6">
+            <div class="card p-4 shadow-sm" style="width: 75%; margin-right: 0;">
+              <h4 class="fw-bold text-primary">元宝塚スター / 高月 凛（29）</h4>
+              <p class="section-text text-dark mb-0">
+                宝塚歌劇団で10年間舞台に立ち、多くの舞台経験と高い表現力を持つ。
+                美しい所作と洗練された話し方が魅力で、映像出演やイベントPRでも存在感を発揮。
+                広報戦略やブランドアンバサダー業務への関心が高い。
+              </p>
+            </div>
+          </div>
+        </div>
+      
+        <!-- ▼ 3人目（画像左寄せ・近づける） -->
+        <div class="row align-items-center py-5">
+          <div class="col-md-4 text-end">
+            <img src="/static/user3.jpg" alt="求職者3" class="img-fluid rounded-circle shadow-lg" style="max-width: 260px;">
+          </div>
+          <div class="col-md-6">
+            <div class="card p-4 shadow-sm" style="width: 75%; margin-left: 0;">
+              <h4 class="fw-bold text-primary">元スポーツキャスター / 西田 翔（36）</h4>
+              <p class="section-text text-dark mb-0">
+                スポーツ番組でのキャスター・リポーター経験15年。現場の臨場感を伝える巧みな表現力が強み。
+                熱意と落ち着きを併せ持ち、スポーツブランド・教育系企業の広報に高い親和性を持つ。
+                現在は企業の社内報やYouTube広報なども検討中。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+
+
+
+    <section class="mb-5">
+        <h3 class="section-title text-center">プラットフォームの特徴</h3>
+        <div class="row text-dark">
+            <div class="col-md-4">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-bullhorn"></i></div>
+                    <h4>直接オファー</h4>
+                    <p>企業が直接スカウト。仲介を省き、スピード感あるマッチング。</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-video"></i></div>
+                    <h4>プロフィール動画対応</h4>
+                    <p>自己紹介を動画で。表現力・人柄をリアルに伝えられます。</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-robot"></i></div>
+                    <h4>AIマッチング</h4>
+                    <p>AIがスキルや経験から最適な求人を提案。マッチ率を向上。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="text-center mb-5">
+        <h3 class="section-title">採用までのシンプルな流れ</h3>
+        <p class="section-text">企業からのオファーを起点に、スムーズなコミュニケーションで面接・採用まで進められます。</p>
+        <div class="row text-dark justify-content-center">
+            <div class="col-md-2">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-envelope-open-text"></i></div>
+                    <h5>Step 1<br>DM送信</h5>
+                    <p>気になる求職者にスカウトDMを送信。</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-comments"></i></div>
+                    <h5>Step 2<br>直接やりとり</h5>
+                    <p>チャット機能でスムーズに連絡・質問が可能。</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-video"></i></div>
+                    <h5>Step 3<br>面接</h5>
+                    <p>オンライン or オフラインで面談を実施。</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="custom-card text-center">
+                    <div class="card-icon"><i class="fas fa-handshake"></i></div>
+                    <h5>Step 4<br>採用</h5>
+                    <p>条件合意後、採用が決定！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="text-center mb-5">
+        <h3 class="section-title">利用企業（一部紹介）</h3>
+        <p class="section-text">すでに多くの企業がこのプラットフォームを活用し、広報・PR人材との出会いを実現しています。</p>
+        <div class="row justify-content-center">
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card py-4">
+                    <img src="https://via.placeholder.com/150x50?text=企業A" alt="企業Aロゴ" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card py-4">
+                    <img src="https://via.placeholder.com/150x50?text=企業B" alt="企業Bロゴ" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card py-4">
+                    <img src="https://via.placeholder.com/150x50?text=企業C" alt="企業Cロゴ" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card py-4">
+                    <img src="https://via.placeholder.com/150x50?text=企業D" alt="企業Dロゴ" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="text-center mb-5">
+        <h3 class="section-title">注目の求職者</h3>
+        <div class="slider-container">
+          <div class="slider-track">
+            {% for user in achievement_users %}
+              <div class="slide">
+                <a href="{{ url_for('candidates_detail', user_id=user.id) }}">
+                  <img 
+                    src="{{ url_for('static', filename='uploads/' + (user.image or 'default.jpg')) }}" 
+                    alt="{{ user.name }}"
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>             
+      </section>
+      
+    <section class="text-center mb-5">
+        <h3 class="section-title">マッチング成功事例</h3>
+        <p class="section-text">このプラットフォームを通じて出会い、実際に活躍している事例をご紹介します。</p>
+    
+        <div class="row justify-content-center">
+            <!-- 成功事例1 -->
+            <div class="col-md-5 mb-4">
+                <div class="custom-card text-start">
+                    <h5 class="fw-bold mb-2">事例①：元アナウンサー × 化粧品メーカー</h5>
+                    <p class="mb-1"><strong>企業担当者の声：</strong><br>
+                    「新商品のPRイベントで話し方に説得力のある方を探していました。元アナウンサーの方は、表現力だけでなく、メディア対応にも非常に強く、社内外からの評価も高いです。」</p>
+                    <p><strong>求職者の声：</strong><br>
+                    「テレビの現場経験をそのまま活かせる職場に出会えました。自分の強みを見つけてくれた企業に感謝しています！」</p>
+                </div>
+            </div>
+    
+            <!-- 成功事例2 -->
+            <div class="col-md-5 mb-4">
+                <div class="custom-card text-start">
+                    <h5 class="fw-bold mb-2">事例②：元宝塚女優 × ITベンチャー企業</h5>
+                    <p class="mb-1"><strong>企業担当者の声：</strong><br>
+                    「広報チームの“顔”となるような方を求めていました。元舞台女優の方は、堂々とした発信力と高い品格を備えており、採用後すぐに自社イベントの司会もこなしています。」</p>
+                    <p><strong>求職者の声：</strong><br>
+                    「華やかな経歴が逆に転職のネックになるかと思っていましたが、ここでは個性を武器にできる企業と出会えました！」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center mb-5">
+        <h3 class="section-title">登録者が持つ主なスキル・経験</h3>
+        <p class="section-text">即戦力の広報人材が多数在籍。貴社の目的にマッチした方が見つかります。</p>
+    
+        <div class="row justify-content-center text-start">
+            <div class="col-md-10">
+                <div class="card p-4 shadow-sm">
+                    <ul class="row list-unstyled">
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>テレビ局でのアナウンサー・キャスター経験</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>プレスリリースの作成・メディア対応経験</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>SNS運用（Instagram / X / TikTok など）</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>記者会見やIR資料のプレゼン実績</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>危機管理広報（炎上時の対応）スキル</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>広報戦略の立案・ブランディング設計</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>イベント・展示会の司会・運営経験</li>
+                        <li class="col-md-6 mb-2"><i class="fas fa-check-circle text-primary me-2"></i>インフルエンサー/タレントとのコラボ経験</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+
+    <section class="text-center mb-5">
+        <h3 class="section-title">なぜ「広報人材」を今採用すべきなのか？</h3>
+        <p class="section-text">広報・PRは企業の“顔”。信頼性・ブランド力・人材獲得力の向上に直結します。</p>
+        <div class="row text-dark">
+            <div class="col-md-4">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold mb-2"><i class="fas fa-bullhorn me-2"></i>企業の信頼性を高める</h5>
+                    <p>広報人材がいることで、メディア対応・危機管理広報・社外プレゼンスが安定。</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold mb-2"><i class="fas fa-handshake me-2"></i>取引先・求職者からの印象UP</h5>
+                    <p>ブランド価値を高め、採用広報やパートナー選定にも良い影響をもたらします。</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold mb-2"><i class="fas fa-users me-2"></i>ファンを増やす“仕掛け人”に</h5>
+                    <p>SNS発信・動画コンテンツなどを使い、企業の魅力を届ける発信力を備えています。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="text-center mb-5">
+        <h3 class="section-title">業務内容とメリット</h3>
+        <p class="section-text">「ブランドをつくるのは、商品ではなく“人の言葉”」<br>広報は、企業と社会をつなぐ“信頼構築のプロフェッショナル”です。</p>
+    
+        <div class="row justify-content-center text-start">
+            <!-- 左：仕事内容・年収 -->
+            <div class="col-md-5 mb-4">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-user-tie me-2"></i>広報の主な業務内容</h5>
+                    <ul>
+                        <li>プレスリリースの作成・配信</li>
+                        <li>メディア対応（取材調整、記者会見など）</li>
+                        <li>SNS・公式HP・YouTubeなどの発信戦略</li>
+                        <li>危機管理広報（リスク対応）</li>
+                        <li>社内広報・インナーブランディング</li>
+                    </ul>
+                    <p class="mt-3"><strong>平均年収：</strong>約450万〜650万円（大手では800万円以上も）</p>
+                    <p class="text-muted">※経験・前職により変動します。</p>
+                </div>
+            </div>
+    
+            <!-- 右：採用メリット -->
+            <div class="col-md-5 mb-4">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-star me-2"></i>企業が広報人材を採用するメリット</h5>
+                    <ul>
+                        <li><strong>信頼される会社づくり</strong>：外部からの印象・信用が劇的に変わる</li>
+                        <li><strong>採用力アップ</strong>：企業の魅力を伝える力で、応募数・質ともに向上</li>
+                        <li><strong>メディア露出の獲得</strong>：テレビやネットニュースで取り上げられやすくなる</li>
+                        <li><strong>炎上リスクへの備え</strong>：正しい情報発信で企業を守る</li>
+                        <li><strong>ブランド価値の向上</strong>：PRは“広告費0円でできるマーケティング”</li>
+                    </ul>
+                    <p class="mt-3">一度採用すれば、あなたの会社の“顔”として長く活躍できる存在に。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="text-center mb-5">
+        <div class="container">
+            <div class="d-flex flex-nowrap justify-content-between gap-3 overflow-auto">
+              {% for user in top_users %}
+                {% set idx = loop.index0 %}
+                {% if idx < 3 %}
+                  <!-- 第1〜3位：やや狭く -->
+                  <div class="flex-grow-1" style="flex-basis: 150px; min-width: 150px;">
+                    <div class="custom-card p-3 h-100 shadow-sm">
+                      <h5 class="fw-bold {{ ['text-danger', 'text-warning', 'text-info'][idx] }}">
+                        {{ ['🥇 第1位', '🥈 第2位', '🥉 第3位'][idx] }}
+                      </h5>
+                      <a href="{{ url_for('candidates_detail', user_id=user.id) }}">
+                        <img src="{{ url_for('static', filename='uploads/' + (user.image or 'default.jpg')) }}"
+                             alt="{{ user.name }}"
+                             class="img-fluid shadow"
+                             style="width: 100%; height: 180px; object-fit: cover;">
+                      </a>
+                      <p class="fw-bold mt-2 mb-0">{{ user.name }}</p>
+                      <small class="text-muted">{{ user.job or '職歴未登録' }}</small>
+                    </div>
+                  </div>
+                {% else %}
+                  <!-- 第4〜5位 -->
+                  <div class="flex-shrink-1 mt-md-4" style="min-width: 140px; max-width: 160px;">
+                    <div class="custom-card px-2 pt-2 pb-2 h-100 shadow-sm" style="min-height: 220px;">
+                      <h6 class="fw-bold mb-1">第{{ idx + 1 }}位</h6>
+                      <a href="{{ url_for('candidates_detail', user_id=user.id) }}">
+                        <img src="{{ url_for('static', filename='uploads/' + (user.image or 'default.jpg')) }}"
+                             alt="{{ user.name }}"
+                             class="img-fluid shadow"
+                             style="width: 100%; height: 160px; object-fit: cover;">
+                      </a>
+                      <p class="fw-bold mt-2 mb-0">{{ user.name }}</p>
+                      <small class="text-muted">{{ user.job or '職歴未登録' }}</small>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          
+            <!-- ボタン -->
+            <div class="mt-4 text-center">
+              <a href="/ranking" class="btn btn-outline-primary btn-lg">ランキングを見る</a>
+            </div>
+          </div>                            
+      </section>
+      
+      
+      
+    
+    
+    
+    <section class="text-center mb-5">
+        <h3 class="section-title">あなたの新しいキャリアを始めませんか？</h3>
+        <p class="section-text">メディア経験を活かしたキャリアパスを見つけて、企業からのオファーを待ちましょう。</p>
+        <a href="/ai-diagnosis" class="btn btn-light btn-lg btn-custom">AI診断をしてみる</a>
+        <a href="/register" class="btn btn-outline-light btn-lg btn-custom">求職者登録はこちら</a>
+    </section>
+</main>
+
+<footer class="text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>PR Career Platform</h5>
+                <p>広報PR特化のセカンドキャリア転職プラットフォーム。メディア経験者と企業をつなぎます。</p>
+                <div>
+                    <i class="fab fa-facebook fa-lg me-2"></i>
+                    <i class="fab fa-twitter fa-lg me-2"></i>
+                    <i class="fab fa-youtube fa-lg"></i>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h6 class="text-white">メニュー</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/dashboard">ホーム</a></li>
+                    <li><a href="/ai-diagnosis">AI診断</a></li>
+                    <li><a href="/scout">スカウト</a></li>
+                    <li><a href="/achievements">実績</a></li>
+                    <li><a href="/pricing">金額情報</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6 class="text-white">求職者情報</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/announcer">アナウンサー</a></li>
+                    <li><a href="/takarazuka">宝塚</a></li>
+                    <li><a href="/comedian">お笑い芸人</a></li>
+                    <li><a href="/athlete">スポーツ選手</a></li>
+                    <li><a href="/former_pr">元広報担当</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6 class="text-white">お問い合わせ</h6>
+                <p>ご質問やご意見はお気軽にお問い合わせください。</p>
+                <a href="/contact" class="btn btn-outline-light btn-sm">お問い合わせフォーム</a>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <small>&copy; 2025 PR Career Platform. All rights reserved.</small>
+            <ul class="nav justify-content-center mt-2">
+                <li class="nav-item"><a class="nav-link text-white" href="/terms">利用規約</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/privacy">プライバシーポリシー</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/company">運営会社</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

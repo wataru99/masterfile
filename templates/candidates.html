@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>求職者ショーケース</title>
+    <header style="margin-bottom: 20px;">
+        <a href="{{ url_for('company.company_matched_dms', company_code=company_code) }}" style="color:#007acc; font-weight:bold; text-decoration:none;">
+            成立したDM一覧
+        </a>
+    </header>    
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .card h3 {
+            margin: 10px 0 5px;
+        }
+        .card .info {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 4px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: white;
+            margin-right: 5px;
+        }
+        .gold { background: gold; color: black; }
+        .silver { background: silver; color: black; }
+        .bronze { background: peru; }
+        .featured { background: crimson; }
+    </style>
+</head>
+<body>
+    <h1>求職者ショーケース</h1>
+    <div class="container">
+        {% for user in users %}
+        <a href="{{ url_for('company.candidates_detail', company_code=company_code, user_id=user.id) }}" class="card">
+            <img src="{{ url_for('static', filename='uploads/' + (user.photo_url or 'default.jpg')) }}" alt="画像">
+            <div class="card-content">
+                <h3>{{ user.full_name }}</h3>
+                <div class="info">職種：{{ user.current_occupation }}</div>
+                <div class="info">居住地：{{ user.address }}</div>
+                <div class="info">
+                    {% if user.membership == 'gold' %}
+                        <span class="badge gold">ゴールド</span>
+                    {% elif user.membership == 'silver' %}
+                        <span class="badge silver">シルバー</span>
+                    {% elif user.membership == 'bronze' %}
+                        <span class="badge bronze">ブロンズ</span>
+                    {% endif %}
+                    {% if user.featured %}
+                        <span class="badge featured">注目</span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

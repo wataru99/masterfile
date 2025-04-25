@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>チャットルーム</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #e6f2ff;
+            padding: 20px;
+        }
+        .chat-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .message.user {
+            flex-direction: row;
+        }
+        .message.company {
+            flex-direction: row-reverse;
+        }
+        .message .icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .bubble {
+            max-width: 65%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.4;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .user .bubble {
+            background: #d1e7ff;
+            border-bottom-left-radius: 4px;
+        }
+        .company .bubble {
+            background: #f0f0f0;
+            border-bottom-right-radius: 4px;
+        }
+        .timestamp {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+        }
+        #chat-form textarea {
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+        #chat-form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            background: #00b894;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #chat-form button:hover {
+            background: #009f7c;
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <h2>チャットルーム</h2>
+    <div id="chat-box">
+        {% for msg in messages %}
+        <div class="message {{ msg.sender_type }}">
+            <img class="icon"
+                  src="{% if msg.sender_type == 'user' %}
+                      {{ url_for('static', filename='uploads/' + (dm.user_photo_url or 'default.jpg')) }}
+                    {% else %}
+                           {{ url_for('static', filename='uploads/' + (dm.company_logo_url or 'company_default.jpeg')) }}
+                      {% endif %}"
+                      alt="icon">
+
+
+            <div>
+                <div class="bubble {{ msg.sender_type }}">{{ msg.message }}</div>
+                <div class="timestamp">{{ msg.timestamp }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form id="chat-form">
+        <textarea name="message" placeholder="メッセージを入力..." required></textarea>
+        <input type="hidden" name="sender_type" value="company">
+        <input type="hidden" name="sender_id" value="{{ dm.company_id }}">
+        <input type="hidden" name="session_id" value="{{ session.id }}">
+        <button type="submit">送信</button>
+    </form>
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+    const socket = io();
+    const form = document.getElementById('chat-form');
+    const chatBox = document.getElementById('chat-box');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const message = form.message.value.trim();
+        if (message === '') return;
+
+        const data = {
+            message: message,
+            sender_type: form.sender_type.value,
+            sender_id: form.sender_id.value,
+            session_id: form.session_id.value
+        };
+        socket.emit("send_message", data);
+        form.message.value = '';
+    });
+
+    socket.on('receive_message', function(data) {
+        const messageBox = document.createElement('div');
+        messageBox.classList.add('message', data.sender_type);
+
+        const avatar = document.createElement('img');
+        avatar.src = `/static/uploads/${data.photo_url || (data.sender_type === 'user' ? 'default.jpg' : 'company_default.jpeg')}`;
+        avatar.alt = 'ユーザー画像';
+        avatar.classList.add('icon');
+
+        const text = document.createElement('div');
+        text.innerHTML = `
+            <div class="bubble ${data.sender_type}">${data.message}</div>
+            <div class="timestamp">${data.timestamp}</div>
+        `;
+
+        messageBox.appendChild(avatar);
+        messageBox.appendChild(text);
+        chatBox.appendChild(messageBox);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+</script>
+</body>
+</html>

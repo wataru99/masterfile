@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>DM一覧</title></head>
+<body>
+    <h1>DM一覧</h1>
+    <ul>
+        {% for dm in dms %}
+            <li>{{ dm.message }}（{{ dm.company.name if dm.company else '不明' }} → {{ dm.user.username if dm.user else '不明' }}）</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

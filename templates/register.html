@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>求職者 登録フォーム</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #e6f2ff;
+            padding: 40px;
+        }
+        h1 {
+            color: #007acc;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="file"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            background-color: #007acc;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #005f99;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007acc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>求職者登録フォーム</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>名前（例：田中 一郎）:</label>
+        <input type="text" name="full_name" placeholder="山田 太郎" required>
+
+        <label>性別:</label>
+        <select name="gender">
+            <option value="">選択してください</option>
+            <option value="男性">男性</option>
+            <option value="女性">女性</option>
+            <option value="その他">その他</option>
+        </select>
+
+        <label>年齢（歳）:</label>
+        <input type="number" name="age" placeholder="例：28">
+
+        <label>住所（例：東京都〇〇区〇〇）:</label>
+        <input type="text" name="address" placeholder="東京都渋谷区道玄坂1-1-1">
+
+        <label>電話番号（例：080-1234-5678）:</label>
+        <input type="tel" name="phone_number" placeholder="080-1234-5678">
+
+        <label>メールアドレス:</label>
+        <input type="email" name="email" placeholder="sample@example.com" required>
+
+        <label>現在の職業:</label>
+        <input type="text" name="current_occupation" placeholder="例：会社員・学生・フリーランスなど">
+
+        <label>希望条件（例：正社員希望・在宅勤務希望など）:</label>
+        <input type="text" name="desired_conditions" placeholder="正社員・在宅可・副業OK など">
+
+        <label>プロフィール画像（任意）:</label>
+        <input type="file" name="photo_url">
+
+        <label>自己紹介:</label>
+        <textarea name="intro" rows="4" placeholder="あなたのスキル・経験・やる気などを自由に記入してください"></textarea>
+
+        <label>パスワード（6文字以上）:</label>
+        <input type="password" name="password" minlength="6" placeholder="パスワードを入力" required>
+
+        <label>パスワード（確認）:</label>
+        <input type="password" name="confirm_password" minlength="6" placeholder="もう一度入力" required>
+
+        <input type="submit" value="登録">
+    </form>
+</body>
+</html>

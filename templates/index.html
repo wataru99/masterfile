@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー一覧</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #f0f0f0;
+        }
+        img {
+            width: 80px;
+            height: auto;
+        }
+        .top-links {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ユーザー一覧</h1>
+
+    <div class="top-links">
+        <a href="{{ url_for('register') }}">＋ 登録フォームへ</a>
+    </div>
+
+    <form method="GET" action="{{ url_for('index') }}">
+        <label>並び替え：</label>
+        <select name="sort">
+            <option value="point" {% if sort == 'point' %}selected{% endif %}>ポイント順</option>
+            <option value="new" {% if sort == 'new' %}selected{% endif %}>新着順</option>
+        </select>
+
+        <label>会員ランク：</label>
+        <select name="membership">
+            <option value="">すべて</option>
+            <option value="gold" {% if membership == 'gold' %}selected{% endif %}>ゴールド</option>
+            <option value="silver" {% if membership == 'silver' %}selected{% endif %}>シルバー</option>
+            <option value="bronze" {% if membership == 'bronze' %}selected{% endif %}>ブロンズ</option>
+        </select>
+
+        <label>注目のみ：</label>
+        <input type="checkbox" name="featured" value="1" {% if featured == '1' %}checked{% endif %}>
+
+        <label>キーワード検索：</label>
+        <input type="text" name="q" value="{{ q or '' }}" placeholder="名前・職種・居住地...">
+
+        <button type="submit">絞り込み</button>
+    </form>    
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>画像</th>
+            <th>名前</th>
+            <th>性別</th>
+            <th>年齢</th>
+            <th>住所</th>
+            <th>電話番号</th>
+            <th>メール</th>
+            <th>現在の職業</th>
+            <th>希望条件</th>
+            <th>自己紹介</th>
+            <th>ポイント</th>
+            <th>会員ランク</th>
+            <th>実績</th>
+            <th>注目</th>
+            <th>編集</th>
+        </tr>
+
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>
+                <img src="{{ url_for('static', filename='uploads/' + (user.photo_url or 'default.jpg')) }}" alt="画像">
+            </td>
+            <td>{{ user.full_name or 'ー' }}</td>
+            <td>{{ user.gender or 'ー' }}</td>
+            <td>{{ user.age or 'ー' }}</td>
+            <td>{{ user.address or 'ー' }}</td>
+            <td>{{ user.phone_number or 'ー' }}</td>
+            <td>{{ user.email or 'ー' }}</td>
+            <td>{{ user.current_occupation or 'ー' }}</td>
+            <td>{{ user.desired_conditions or 'ー' }}</td>
+            <td>{{ user.intro or 'ー' }}</td>
+            <td>{{ user.point or '0' }}</td>
+            <td>
+                {% if user.membership == 'gold' %}
+                    <span style="color: gold;">ゴールド</span>
+                {% elif user.membership == 'silver' %}
+                    <span style="color: silver;">シルバー</span>
+                {% elif user.membership == 'bronze' %}
+                    <span style="color: peru;">ブロンズ</span>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{ '✅' if user.achievement == '1' else 'ー' }}</td>
+            <td>{{ '🔥' if user.featured == '1' else 'ー' }}</td>
+            <td><a href="{{ url_for('edit', user_id=user.id) }}">編集</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

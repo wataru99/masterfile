@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>DMの確認</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #e9f5ff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 720px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007acc;
+        }
+        .message-box {
+            background: #f5faff;
+            border-left: 5px solid #00b894;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .company-name {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .message-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .response-form {
+            margin-top: 30px;
+        }
+        .response-form p {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn-accept {
+            background-color: #00b894;
+            color: white;
+        }
+        .btn-reject {
+            background-color: #ff7675;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .status {
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007acc;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>DMの内容を確認</h1>
+
+    <div class="message-box">
+        <div class="company-name"><strong>送信企業：</strong> {{ dm.company_name or '不明' }}</div>
+        <div class="message-content">{{ dm.message }}</div>
+    </div>
+
+    {% if dm.responded == 1 %}
+    <div class="status">
+        <strong>対応済み：</strong><br>
+        {% if dm.accepted == 1 %}
+            ✅「話を聞いてみたい」と回答しました。
+            {% if dm.chat_session_id %}
+                <br><a class="link" href="{{ url_for('user.chat', session_id=dm.chat_session_id) }}">👉 チャットに進む</a>
+            {% endif %}
+        {% else %}
+            ❌ 辞退済みです。
+        {% endif %}
+    </div>
+    <a class="link" href="{{ url_for('user.user_dashboard', user_id=dm.user_id) }}">← マイページに戻る</a>
+{% else %}
+    <form method="post" class="response-form">
+        <p>この企業と話をしてみたいですか？</p>
+        <button class="btn btn-accept" type="submit" name="response" value="accept">✅ 話を聞いてみたい</button>
+        <button class="btn btn-reject" type="submit" name="response" value="reject">❌ 辞退する</button>
+    </form>
+    <a class="link" href="{{ url_for('user.user_dashboard', user_id=dm.user_id) }}">← マイページに戻る</a>
+{% endif %}
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー編集（管理者）</title>
+</head>
+<body>
+    <h1>ユーザー編集（管理者）</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>名前：</label><br>
+        <input type="text" name="full_name" value="{{ user.full_name }}" required><br><br>
+
+        <label>性別：</label><br>
+        <select name="gender">
+            <option value="">選択してください</option>
+            <option value="男性" {% if user.gender == '男性' %}selected{% endif %}>男性</option>
+            <option value="女性" {% if user.gender == '女性' %}selected{% endif %}>女性</option>
+            <option value="その他" {% if user.gender == 'その他' %}selected{% endif %}>その他</option>
+        </select><br><br>
+
+        <label>年齢：</label><br>
+        <input type="number" name="age" value="{{ user.age }}"><br><br>
+
+        <label>住所：</label><br>
+        <input type="text" name="address" value="{{ user.address }}"><br><br>
+
+        <label>電話番号：</label><br>
+        <input type="tel" name="phone_number" value="{{ user.phone_number }}"><br><br>
+
+        <label>メール：</label><br>
+        <input type="email" name="email" value="{{ user.email }}" required><br><br>
+
+        <label>現在の職業：</label><br>
+        <input type="text" name="current_occupation" value="{{ user.current_occupation }}"><br><br>
+
+        <label>希望条件：</label><br>
+        <input type="text" name="desired_conditions" value="{{ user.desired_conditions }}"><br><br>
+
+        <label>プロフィール画像：</label><br>
+        <img src="{{ url_for('static', filename='uploads/' + (user.photo_url or 'default.jpg')) }}" alt="画像" width="120"><br><br>
+
+        <label>新しい画像をアップロード：</label><br>
+        <input type="file" name="photo_url"><br><br>
+
+        <label>
+            <input type="checkbox" name="delete_image" value="1"> 現在の画像を削除する
+        </label><br><br>
+
+        <label>自己紹介：</label><br>
+        <textarea name="intro" rows="4" cols="40">{{ user.intro }}</textarea><br><br>
+
+        <label>ポイント：</label><br>
+        <input type="number" name="point" value="{{ user.point or 0 }}"><br><br>
+
+        <label>会員ランク：</label><br>
+        <select name="membership">
+            <option value="" {% if not user.membership %}selected{% endif %}>未選択</option>
+            <option value="gold" {% if user.membership == 'gold' %}selected{% endif %}>ゴールド</option>
+            <option value="silver" {% if user.membership == 'silver' %}selected{% endif %}>シルバー</option>
+            <option value="bronze" {% if user.membership == 'bronze' %}selected{% endif %}>ブロンズ</option>
+        </select><br><br>
+
+        <label>実績あり：</label>
+        <input type="checkbox" name="achievement" value="1" {% if user.achievement == '1' %}checked{% endif %}><br><br>
+
+        <label>注目：</label>
+        <input type="checkbox" name="featured" value="1" {% if user.featured == '1' %}checked{% endif %}><br><br>
+
+        <input type="submit" value="保存">
+    </form>
+
+    <br>
+    <a href="{{ url_for('index') }}">← 一覧に戻る</a>
+</body>
+</html>

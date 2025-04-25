@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>チャット一覧</title></head>
+<body>
+    <h1>チャットセッション一覧</h1>
+    <ul>
+        {% for chat in chats %}
+            <li>ユーザーID: {{ chat.user_id }} / 企業ID: {{ chat.company_id }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

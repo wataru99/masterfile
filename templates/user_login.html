@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>求職者 ログイン</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 360px;
+        }
+        h1 {
+            text-align: center;
+            color: #007acc;
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            background-color: #007acc;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #005f99;
+        }
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .links a {
+            color: #007acc;
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>ログイン</h1>
+        <form method="POST">
+            <label for="username">ユーザーIDまたはメールアドレス:</label>
+            <input type="text" name="username" required>
+        
+            <label for="password">パスワード:</label>
+            <input type="password" name="password" required>
+        
+            <input type="submit" value="ログイン">
+        </form>        
+
+        <div class="links">
+            <a href="{{ url_for('register') }}">新規登録はこちら</a>
+            <a href="#">パスワードを忘れた方はこちら</a>
+        </div>
+    </div>
+</body>
+</html>

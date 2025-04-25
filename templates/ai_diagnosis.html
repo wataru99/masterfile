@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>AI診断 | PR Career Platform</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+        body {
+            background-image: url("/static/okumono.png");
+            background-size: cover;         /* 画面全体にフィット */
+            background-repeat: no-repeat;   /* 繰り返さない */
+            background-position: center;    /* 中央に配置 */
+        }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 30px;
+    }
+    .btn-start {
+      background-color: #0072FF;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+    }
+    .btn-start:hover {
+      background-color: #005DC1;
+    }
+  </style>
+  
+</head>
+
+<body>
+  
+  <header class="bg-dark shadow-sm py-3 fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h4 text-white">PR Career Platform</h1>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item"><a class="nav-link text-white" href="/dashboard">ホーム</a></li>
+          <li class="nav-item"><a class="nav-link text-white active" href="/ai-diagnosis">AI診断</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/profile">プロフィール</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2 class="text-center mb-4">AI診断をはじめましょう</h2>
+      <p class="text-center">あなたのこれまでの経験やスキルをもとに、AIが最適なキャリアの方向性を診断します。<br>以下のボタンをクリックして診断を開始してください。</p>
+      <div class="text-center mt-4">
+        <a href="/ai-diagnosis-questions" class="btn btn-start">診断を開始する</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
